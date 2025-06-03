@@ -68,8 +68,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<VoucherResponse>, t: Throwable) {
-                        Toast.makeText(this@MainActivity, "Gagal koneksi API: "+t.message, Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(this@MainActivity, "Gagal koneksi API: "+t.message, Toast.LENGTH_SHORT).show()
                     }
                 })
         }
