@@ -26,25 +26,6 @@ class MainActivity : AppCompatActivity() {
         btnCheck = findViewById(R.id.btnCheck)
 
         btnCheck.setOnClickListener {
-            //val code = VoucherRepository.postVoucher("BCWXXS")
-            //val code = VoucherRepository.postVoucher("CWAZ8R")
-
-            /*
-                RetrofitClient.instance.readVoucher(code.toString()).enqueue(object : Callback<VoucherResponse> {
-                    override fun onResponse(call: Call<VoucherResponse>, response: Response<VoucherResponse>) {
-                        System.out.println("[RESP] "+response.body()?.message)
-                        if (response.body()?.message == "true") {
-                            startActivity(Intent(this@MainActivity, WhatsAppActivity::class.java))
-                        } else {
-                            Toast.makeText(this@MainActivity, "Voucher tidak valid", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    override fun onFailure(call: Call<VoucherResponse>, t: Throwable) {
-                        Toast.makeText(this@MainActivity, "Gagal koneksi API", Toast.LENGTH_SHORT).show()
-                    }
-                })
-            */
-
             val builder = MultipartBody.Builder()
             builder.setType(MultipartBody.FORM)
             builder.addFormDataPart("code_voucher", etVoucher.text.toString())
