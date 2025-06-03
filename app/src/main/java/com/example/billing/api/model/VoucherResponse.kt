@@ -1,6 +1,6 @@
 package com.example.billing.api.model
 
-data class VoucherRespoonse(
+data class VoucherResponse(
     val message: String,
     val voucher: Voucher
 )
@@ -8,6 +8,6 @@ data class VoucherRespoonse(
 data class Voucher(
     val code: String,
     val customer_name: String,
-    val duration: Boolean = true,
+    val duration: Int = 0,
     val id: Int = 0
 )

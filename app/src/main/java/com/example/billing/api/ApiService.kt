@@ -1,12 +1,16 @@
 package com.example.billing.api
 
-import com.example.billing.api.model.VoucherRespoonse
+import com.example.billing.api.model.VoucherResponse
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-    interface ApiService {
-        @POST("api/read/voucher")
-        fun readVoucher(@Body code: String): Call<VoucherRespoonse>
 
-    }
+interface ApiService {
+    //@POST("api/read/voucher")
+    //fun readVoucher(@Body code: String): Call<VoucherResponse>
+
+    @POST("api/read/voucher")
+    fun readVoucher(@Body reqBody: RequestBody): Call<VoucherResponse>
+}
