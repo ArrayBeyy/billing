@@ -26,32 +26,45 @@ class MainActivity : AppCompatActivity() {
         btnCheck = findViewById(R.id.btnCheck)
 
         btnCheck.setOnClickListener {
-            val builder = MultipartBody.Builder()
-            builder.setType(MultipartBody.FORM)
-            builder.addFormDataPart("code_voucher", etVoucher.text.toString())
+            //val cd = Intent(this@MainActivity, CountdownActivity::class.java)
+            //startActivity(cd)
 
-            RetrofitClient.instance.readVoucher(builder.build())
-                .enqueue(object : Callback<VoucherResponse> {
-                    override fun onResponse(
-                        call: Call<VoucherResponse>,
-                        response: Response<VoucherResponse>
-                    ) {
-                        if (response.body()?.message == "Voucher berhasil terbaca") {
-                            Toast.makeText(applicationContext, "${response.body()?.voucher?.id} ${response.body()?.voucher?.code} ${response.body()?.voucher?.customer_name}", Toast.LENGTH_SHORT).show()
-                            //startActivity(Intent(this@MainActivity, WhatsAppActivity::class.java))
-                        } else {
-                            Toast.makeText(
-                                this@MainActivity,
-                                "Voucher tidak valid",
-                                Toast.LENGTH_SHORT
-                            ).show()
+            if (etVoucher.text.toString().isEmpty()){
+                Toast.makeText(applicationContext, "Kode voucher belum di-input.", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                val builder = MultipartBody.Builder()
+                builder.setType(MultipartBody.FORM)
+                builder.addFormDataPart("code_voucher", etVoucher.text.toString())
+
+                RetrofitClient.instance.readVoucher(builder.build())
+                    .enqueue(object : Callback<VoucherResponse> {
+                        override fun onResponse(
+                            call: Call<VoucherResponse>,
+                            response: Response<VoucherResponse>
+                        ) {
+                            if (response.isSuccessful){
+                                if (response.body()?.message == "Voucher berhasil terbaca") {
+                                    //Toast.makeText(applicationContext, "${response.body()?.voucher?.id} ${response.body()?.voucher?.code} ${response.body()?.voucher?.customer_name}", Toast.LENGTH_SHORT).show()
+                                    val nextIntent = Intent(this@MainActivity, WhatsAppActivity::class.java)
+                                    nextIntent.putExtra("CODE_VOUCHER", etVoucher.text.toString())
+                                    startActivity(nextIntent)
+                                }
+                            }
+                            else {
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "Voucher tidak valid",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
-                    }
 
-                    override fun onFailure(call: Call<VoucherResponse>, t: Throwable) {
-                        Toast.makeText(this@MainActivity, "Gagal koneksi API: "+t.message, Toast.LENGTH_SHORT).show()
-                    }
-                })
+                        override fun onFailure(call: Call<VoucherResponse>, t: Throwable) {
+                            Toast.makeText(this@MainActivity, "Gagal koneksi API: "+t.message, Toast.LENGTH_SHORT).show()
+                        }
+                    })
+            }
         }
     }
 }

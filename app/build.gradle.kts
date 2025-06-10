@@ -47,6 +47,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("org.json:json:20231013")
+    implementation("com.github.iwgang:countdownview:2.1.6")
 
     //json converter
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")

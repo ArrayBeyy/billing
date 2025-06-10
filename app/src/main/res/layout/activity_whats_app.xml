@@ -11,6 +11,7 @@
     tools:context=".WhatsAppActivity">
 
     <EditText
+        android:text="6281234123400"
         android:id="@+id/etPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +23,7 @@
     <Button
         android:id="@+id/btnSend"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:hint="Kirim"
         android:layout_margin="16dp"/>
 
