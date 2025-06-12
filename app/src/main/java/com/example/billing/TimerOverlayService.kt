@@ -30,7 +30,7 @@ class TimerOverlayService : Service() {
     private lateinit var windowManager: WindowManager
     private lateinit var overlayView: View
     private var timer: CountDownTimer? = null
-    private var secondsLeft = 120 // contoh timer 60 detik
+    private var secondsLeft = 200 // contoh timer 60 detik
     private var codeVoucher = "";
 
 
@@ -39,14 +39,15 @@ class TimerOverlayService : Service() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
         super.onCreate()
-        windowManager = getSystemService(WINDOW_SERVICE ) as WindowManager
+        System.out.println("Nilai secondsLeft dari intent: " + secondsLeft);
+        windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         val inflater = LayoutInflater.from(this)
         overlayView = inflater.inflate(R.layout.activity_timer_overlay_service, null)
 
         val timerText = overlayView.findViewById<TextView>(R.id.timerText)
         val stopButton = overlayView.findViewById<Button>(R.id.stopButton)
 
-        startTimer(timerText)
+        //startTimer(timerText)
 
         stopButton.setOnClickListener {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
@@ -66,19 +67,27 @@ class TimerOverlayService : Service() {
                         if (response.isSuccessful) {
                             if (response.body()?.message == "Voucher berhasil distop") {
                                 timer?.cancel()
-                                val mainIntent = Intent(this@TimerOverlayService, MainActivity::class.java)
+                                val mainIntent =
+                                    Intent(this@TimerOverlayService, MainActivity::class.java)
                                 mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                 startActivity(mainIntent)
                                 stopSelf()
                             }
-                        }
-                        else {
-                            Toast.makeText(applicationContext, "Gagal stop voucher", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Gagal stop voucher",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
 
                     override fun onFailure(call: Call<VoucherResponse>, t: Throwable) {
-                        Toast.makeText(this@TimerOverlayService, "Gagal koneksi API: "+t.message, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@TimerOverlayService,
+                            "Gagal koneksi API: " + t.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 })
         }
@@ -103,8 +112,11 @@ class TimerOverlayService : Service() {
     private fun startTimer(timerText: TextView) {
         timer = object : CountDownTimer((secondsLeft * 1000).toLong(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                val seconds = millisUntilFinished / 1000
-                timerText.text = "Timer: $seconds"
+                val totalSeconds = millisUntilFinished / 1000
+                val hours = totalSeconds / 3600
+                val minutes = (totalSeconds % 3600) / 60
+                val seconds = totalSeconds % 60
+                timerText.text = String.format("Timer: %02d:%02d:%02d", hours, minutes, seconds)
             }
 
             @SuppressLint("NewApi")
@@ -127,18 +139,26 @@ class TimerOverlayService : Service() {
                         ) {
                             if (response.isSuccessful) {
                                 if (response.body()?.message == "Voucher berhasil distop") {
-                                    val backToMain = Intent(this@TimerOverlayService, MainActivity::class.java)
+                                    val backToMain =
+                                        Intent(this@TimerOverlayService, MainActivity::class.java)
                                     backToMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(backToMain)
                                 }
-                            }
-                            else {
-                                Toast.makeText(applicationContext, "Gagal stop voucher", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Gagal stop voucher",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
 
                         override fun onFailure(call: Call<VoucherResponse>, t: Throwable) {
-                            Toast.makeText(this@TimerOverlayService, "Gagal koneksi API: "+t.message, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@TimerOverlayService,
+                                "Gagal koneksi API: " + t.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     })
 
@@ -166,14 +186,11 @@ class TimerOverlayService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent != null && intent.extras != null) {
             codeVoucher = intent.getStringExtra("CODE_VOUCHER") ?: ""
-            secondsLeft = intent.getIntExtra("DURATION", 0)
+            secondsLeft = intent.getIntExtra("DURATION", 0) // dalam detik
 
-            val builder = MultipartBody.Builder()
-            builder.setType(MultipartBody.FORM)
-            builder.addFormDataPart("code_voucher", codeVoucher)
-
-            RetrofitClient.instance.useVoucher(builder.build())
+            val timerText = overlayView.findViewById<TextView>(R.id.timerText)
+            startTimer(timerText)
         }
-        return super.onStartCommand(intent, flags, startId)
+        return START_STICKY
     }
 }
