@@ -1,5 +1,6 @@
 package com.example.billing
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -17,10 +18,24 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
     private lateinit var etVoucher: EditText
     private lateinit var btnCheck: Button
+    //bagian screen pining
+    /*private var tapCount = 0
+    private var lastTapTime = 0L*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportActionBar?.hide()
+
+
+        //screen pining
+        /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as android.app.ActivityManager
+            if (!activityManager.isInLockTaskMode) {
+                startLockTask()
+                Toast.makeText(this, "Screen pinning aktif", Toast.LENGTH_SHORT).show()
+            }
+        }*/
 
         etVoucher = findViewById(R.id.etVoucher)
         btnCheck = findViewById(R.id.btnCheck)
@@ -28,6 +43,26 @@ class MainActivity : AppCompatActivity() {
         btnCheck.setOnClickListener {
             //val cd = Intent(this@MainActivity, CountdownActivity::class.java)
             //startActivity(cd)
+
+            // Sebelum membuka WhatsApp
+            //if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+             //   stopLockTask() // Lepaskan screen pinning secara otomatis
+            //}
+
+            // Deteksi 5x ketukan cepat untuk keluar
+           /* val currentTime = System.currentTimeMillis()
+            if (currentTime - lastTapTime < 1000) {
+                tapCount++
+                if (tapCount >= 5) {
+                    stopLockTask()
+                    Toast.makeText(this, "Screen pinning dimatikan", Toast.LENGTH_SHORT).show()
+                    tapCount = 0
+                }
+            } else {
+                tapCount = 1
+            }
+            lastTapTime = currentTime?*/
+
 
             if (etVoucher.text.toString().isEmpty()){
                 Toast.makeText(applicationContext, "Kode voucher belum di-input.", Toast.LENGTH_SHORT).show()

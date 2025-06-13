@@ -7,11 +7,12 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:padding="24dp"
+    android:background="@drawable/bg"
     android:orientation="vertical"
     tools:context=".WhatsAppActivity">
 
     <EditText
-        android:text="6281234123400"
+        android:text="62"
         android:id="@+id/etPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +25,8 @@
         android:id="@+id/btnSend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColorHint="@color/design_default_color_on_secondary"
         android:hint="Kirim"
-        android:layout_margin="16dp"/>
+        android:backgroundTint="@android:color/holo_orange_light"/>
 
 </LinearLayout>

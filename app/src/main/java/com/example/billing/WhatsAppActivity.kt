@@ -28,6 +28,7 @@ class WhatsAppActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_whats_app)
+        supportActionBar?.hide()
 
         val etPhone = findViewById<EditText>(R.id.etPhone)
         val btnSend = findViewById<Button>(R.id.btnSend)

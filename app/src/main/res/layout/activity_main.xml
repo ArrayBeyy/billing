@@ -8,23 +8,38 @@
     android:padding="24dp"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@drawable/bg"
     tools:context=".MainActivity">
 
-    <EditText
-    android:id="@+id/etVoucher"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Masukan Kode Voucher"
-    android:inputType="text"
-    android:padding="12dp"
-    android:background="@android:drawable/editbox_dropdown_light_frame"/>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="276dp"
+        android:layout_height="271dp"
+        app:srcCompat="@drawable/zavas" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:endIconMode="password_toggle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etVoucher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Masukan Kode Voucher"
+            android:inputType="textPassword"
+            android:background="@android:drawable/editbox_dropdown_light_frame"
+            android:padding="23dp"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnCheck"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:textColorHint="@color/design_default_color_on_secondary"
         android:hint="Cek Voucher"
-        android:background="@android:drawable/editbox_dropdown_light_frame"/>
+        android:backgroundTint="@android:color/holo_orange_light" />
 
 </LinearLayout>
