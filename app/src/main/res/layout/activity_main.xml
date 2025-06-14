@@ -11,6 +11,17 @@
     android:background="@drawable/bg"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/editTextText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:inputType="text"
+        android:text="Selamat datang di aplikasi ZAVAS!" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="276dp"

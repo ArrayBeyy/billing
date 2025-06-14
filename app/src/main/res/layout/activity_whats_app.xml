@@ -11,6 +11,27 @@
     android:orientation="vertical"
     tools:context=".WhatsAppActivity">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:padding="25dp"
+        android:text="Masukan no telp yang dituju" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textStyle="italic"
+        android:textColor="#FFFFFF"
+        android:padding="5dp"
+        android:text="*pastikan no telp yang dituju sudah terdaftar" />
+
     <EditText
         android:text="62"
         android:id="@+id/etPhone"
